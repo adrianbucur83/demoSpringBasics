@@ -1,4 +1,4 @@
-package com.example.demo1;
+package com.example.demo1.model;
 
 public class Car {
     @Override
