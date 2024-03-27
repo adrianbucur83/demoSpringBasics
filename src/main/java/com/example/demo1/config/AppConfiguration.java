@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 
     @Bean(name = "welcomeMessage")
+
     public WelcomeMessage getWelcomeMessage(){
         return new WelcomeMessage("New welcome message ");
     }
@@ -15,6 +16,14 @@ public class AppConfiguration {
     @Bean(name = "welcomeMessage2")
     public WelcomeMessage getWelcomeMessage2(){
         return new WelcomeMessage("<h1>Second welcome message</h1>");
+    }
+
+    @Bean(name = "defaultSettings")
+    public AppSettings getAppSettings(){
+        AppSettings appSettings = new AppSettings();
+        appSettings.setSetting1("value1");
+        appSettings.setSetting2("value2");
+        return appSettings;
     }
 
 }
