@@ -5,7 +5,7 @@ import lombok.*;
 @Data
 @Builder
 public class Car {
-    private String model;
+    private String   model;
     private Engine engine;
     private String color;
     private String topSpeed;
