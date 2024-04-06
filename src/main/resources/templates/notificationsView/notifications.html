@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Notifications</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Notifications List</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Message</th>
+            <th>Recipient</th>
+            <th>Sender</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody th:each="notification : ${notifications}">
+        <tr>
+            <td th:text="${notification.id}"></td>
+            <td th:text="${notification instanceof T(com.example.demo1.model.notificationsType.EmailNotification) ? 'Email' : 'SMS'}"></td>
+            <td th:text="${notification.message}"></td>
+            <td th:text="${notification instanceof T(com.example.demo1.model.notificationsType.EmailNotification) ? notification.recipientEmail : notification.recipientNumber}"></td>
+            <td th:text="${notification instanceof T(com.example.demo1.model.notificationsType.EmailNotification) ? notification.senderEmail : notification.senderNumber}"></td>
+            <td th:text="${#dates.format(notification.timestamp, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
