@@ -18,6 +18,11 @@ public class AppConfiguration {
         return new WelcomeMessage("<h1>Second welcome message</h1>");
     }
 
+    @Bean(name ="welcomeMessagePayment")
+    public WelcomeMessage getWelcomeMessagePayment(){
+        return new WelcomeMessage("PAYMENTS");
+    }
+
     @Bean(name = "defaultSettings")
     public AppSettings getAppSettings(){
         AppSettings appSettings = new AppSettings();
