@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Review {
- //   private int id;
+    private int id;
     private String reviewMsg;
-   // private Date date;
+    private LocalDate date;
     private String userName;
 
     public Review() {

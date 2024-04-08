@@ -7,7 +7,7 @@
     <title>review</title>
 </head>
 <body>
-<form th:action="@{/your-review}" th:object="${review}" method="post">
+<form th:action="@{/reviews/your-review}" th:object="${review}" method="post">
     <label for="userName">User Name</label>
     <input id="userName" type="text" th:field="*{userName}"/>
     <label for="reviewMsg">Your review message</label>
