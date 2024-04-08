@@ -1,19 +1,21 @@
 package com.example.demo1.controller;
 
-import com.example.demo1.model.WelcomeMessage;
 import com.example.demo1.model.Review;
+import com.example.demo1.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @RequestMapping("/reviews")
 public class ProductReviewsController {
 
+private final ReviewService reviewService;
+@Autowired
+    public ProductReviewsController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
 
     //CRUD
@@ -37,8 +39,9 @@ public class ProductReviewsController {
     ;
 
     @GetMapping("/all-reviews")
-    public String getReviews() {
-        return "get-reviews";
+    public String getReviews(Model model) {
+        model.addAttribute("reviews", reviewService.getAllReviews());
+        return "reviews/get-reviews";
     }
 
     ;
