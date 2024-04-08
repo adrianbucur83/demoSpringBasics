@@ -15,6 +15,7 @@ public class DeliveriesController {
 
     @GetMapping
     public String getDeliveries(){
+        //ceva schimbari in cod
         return "deliveries/getDeliveries";
     };
 
