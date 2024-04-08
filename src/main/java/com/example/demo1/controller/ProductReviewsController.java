@@ -17,7 +17,7 @@ public class ProductReviewsController {
 
 
     //CRUD
-    @GetMapping(" /review-form")
+    @GetMapping("/review-form")
     public String displayReviewForm(Model model) {
         model.addAttribute("review", new Review());
 

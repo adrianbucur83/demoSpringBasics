@@ -3,11 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Hello</title>
+    <title>Your review</title>
 </head>
 <body>
 <p>
-    Hello, <span th:text="${review.userName + ' ' + review.reviewMsg}">user</span>!
+    Thank you for your review! <span th:text="${review}">user</span>
+
 </p>
 </body>
 </html>
