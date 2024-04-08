@@ -1,24 +1,32 @@
 package com.example.demo1.controller;
 
-import com.example.demo1.model.WelcomeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
+@RequestMapping("/deliveries")
 public class DeliveriesController {
-    @Autowired
-    WelcomeMessage welcomeMessage;
 
-    @GetMapping("/deliveries")
-    public String getDeliveries() {
-        return welcomeMessage.getMessage() + "<br> Delivery 1 <br> Delivery 2";
-    }
+    //CRUD
+    @PostMapping
+    public String createDelivery(){
+        return "deliveries/createDelivery";
+    };
 
-    @GetMapping("/deliveries/{name}")
-    public String getDeliveries(@PathVariable("name") String name) {
-        return welcomeMessage.getMessage() + name + "<br> Delivery 1 <br> Delivery 2";
-    }
+    @GetMapping
+    public String getDeliveries(){
+        //ceva schimbari in cod
+        return "deliveries/getDeliveries";
+    };
+
+    @PutMapping
+    public String updateDelivery(){
+        return "deliveries/updateDelivery";
+    };
+
+    @DeleteMapping
+    public String deleteDelivery(){
+        return "deliveries/deleteDelivery";
+    };
 
 }
