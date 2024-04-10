@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeliveriesRepository extends JpaRepository<Delivery, Integer> {
+
+
+    //todo stuff
 }
