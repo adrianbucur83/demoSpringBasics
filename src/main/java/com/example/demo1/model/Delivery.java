@@ -15,7 +15,6 @@ public class Delivery {
     private String address;
     private LocalDateTime date;
     private boolean confirmed;
-    @Column(name = "customer_id")
     private String customerId;
 
 }
