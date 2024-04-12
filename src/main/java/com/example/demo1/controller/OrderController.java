@@ -1,7 +1,9 @@
 package com.example.demo1.controller;
 
 import com.example.demo1.model.Order;
+import com.example.demo1.model.orderDto.OrderDto;
 import com.example.demo1.service.OrderService;
+import com.example.demo1.service.impl.OrderServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +20,35 @@ public class OrderController {
 
     @GetMapping
     public String getOrders(Model model){
-        List<Order> orders = orderService.getAllOrders();
+        List<OrderDto> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
+        return "orders/order";
+    }
+
+    @GetMapping("/statustrue")
+    public String getOrdersByStatus(Model model){
+        List<OrderDto> orders = orderService.getAllOrdersByStatus();
+        model.addAttribute("orders", orders);
+        return "orders/order";
+    }
+
+    @GetMapping("/status")
+    public String getOrdersBySettingStatus( Model model){
+        List<OrderDto> orders = orderService.getAllOrdersBySetStatus();
         model.addAttribute("orders", orders);
         return "orders/order";
     }
 
     @GetMapping("/new")
     public String createOrder(Model model){
-        Order order = new Order();
-        model.addAttribute("order", order);
+        OrderDto orderDto = new OrderDto();
+        model.addAttribute("order", orderDto);
         return "orders/create-order";
     }
 
     @PostMapping
-    public String showOrders(@ModelAttribute("order") Order order){
-        orderService.createOrder(order);
+    public String showOrders(@ModelAttribute("order") OrderDto orderDto){
+        orderService.createOrder(orderDto);
         return "redirect:/orders";
     }
 
@@ -48,8 +64,7 @@ public class OrderController {
 
     @PostMapping("/{orderId}")
     public String updateOrders(@PathVariable Long orderId,
-                               @ModelAttribute("order") Order order){
-        order.setOrderId(orderId);
+                               @ModelAttribute("order") OrderDto order){
         orderService.updateOrder(order);
         return "redirect:/orders";
     }
@@ -59,6 +74,7 @@ public class OrderController {
         orderService.deleteOrder(orderId);
         return "redirect:/orders";
     }
+
     @GetMapping("/{orderId}/view")
     public String viewOrder(@PathVariable("orderId")Long orderId, Model model) {
 

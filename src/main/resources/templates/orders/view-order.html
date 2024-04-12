@@ -14,7 +14,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Store Management System</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button"
+            data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -37,9 +39,12 @@
           <h2 class="text-center">Order Details</h2>
         </div>
         <div class="card-body">
-          <p>Order Id: <strong th:text="${order.orderId}"></strong></p>
-          <p>Total Amount: <strong th:text="${order.totalAmount}"></strong></p>
           <p>Customer Name: <strong th:text="${order.customerName}"></strong></p>
+          <p>Total Amount: <strong th:text="${order.totalAmount}"></strong></p>
+          <p>Date Time: <strong th:text="${order.dateTime}"></strong></p>
+          <p>Address: <strong th:text="${order.address}"></strong></p>
+          <p>Order Status: <strong th:text="${order.orderStatus}"></strong></p>
+          <p>Notes: <strong th:text="${order.notes}"></strong></p>
         </div>
       </div>
     </div>

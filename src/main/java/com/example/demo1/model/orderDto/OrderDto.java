@@ -1,20 +1,15 @@
-package com.example.demo1.model;
+package com.example.demo1.model.orderDto;
 
-import com.example.demo1.user.model.User;
-import jakarta.persistence.*;
+import com.example.demo1.model.Order;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "orders")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class OrderDto {
+
     private Long orderId;
     private String customerName;
     private Long totalAmount;
@@ -23,8 +18,5 @@ public class Order {
     private boolean orderStatus;
     private String notes;
     private Long userId;
-
-    //private List<Product> products;
-
 
 }

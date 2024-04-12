@@ -41,33 +41,23 @@
     <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
         <tr>
-            <td>Order Id </td>
             <td>Customer Name </td>
-<!--            <td>Order Date and Time</td>-->
             <td>Total Amount </td>
-<!--            <td>Shipping Address</td>-->
-<!--            <td>Billing Address</td>-->
-<!--            <th>Payment Status</th>-->
-<!--            <th>Shipping Status</th>-->
-<!--            <th>Payment Method</th>-->
-<!--            <th>Order Status</th>-->
-<!--            <th>Order Notes</th>-->
+            <td>Order Date and Time</td>
+            <td>Address</td>
+            <th>Order Status</th>
+            <th>Order Notes</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
-            <td th:text="${order.orderId}"></td>
             <td th:text="${order.customerName}"></td>
-<!--            <td th:text="${order.dateTime}"></td>-->
             <td th:text="${order.totalAmount}"></td>
-<!--            <td th:text="${order.shippingAddress}"></td>-->
-<!--            <td th:text="${order.billingAddress}"></td>-->
-<!--            <td th:text="${order.paymentStatus}"></td>-->
-<!--            <td th:text="${order.shippingStatus}"></td>-->
-<!--            <td th:text="${order.paymentMethod}"></td>-->
-<!--            <td th:text="${order.orderStatus}"></td>-->
-<!--            <td th:text="${order.notes}"></td>-->
+            <td th:text="${order.dateTime}"></td>
+            <td th:text="${order.address}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.notes}"></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/orders/{orderId}/edit(orderId=${order.orderId})}">Edit</a>
                 <a class="btn btn-danger" th:href="@{/orders/{orderId}/delete(orderId=${order.orderId})}">Delete</a>
