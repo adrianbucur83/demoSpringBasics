@@ -1,6 +1,5 @@
 package com.example.demo1.model;
 
-import com.example.demo1.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -23,8 +22,6 @@ public class Order {
     private boolean orderStatus;
     private String notes;
     private Long userId;
-
-    //private List<Product> products;
 
 
 }

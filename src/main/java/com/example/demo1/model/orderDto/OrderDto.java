@@ -1,6 +1,4 @@
 package com.example.demo1.model.orderDto;
-
-import com.example.demo1.model.Order;
 import lombok.*;
 
 import java.time.LocalDateTime;
