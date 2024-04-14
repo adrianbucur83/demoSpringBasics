@@ -26,6 +26,12 @@ public class ProductService {
     }
 
     public void updateProduct(Product oldProduct, Product newProduct) {
+        newProduct.setId(oldProduct.getId());
+        newProduct.setName(oldProduct.getName());
+        newProduct.setPrice(oldProduct.getPrice());
+        newProduct.setStock(oldProduct.getStock());
+        newProduct.setDescription(oldProduct.getDescription());
+
         productHashMap.remove(oldProduct.getId());
         productHashMap.put(newProduct.getId(), newProduct);
     }
