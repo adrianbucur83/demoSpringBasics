@@ -57,7 +57,6 @@ public class DeliveriesService {
         delivery.setDate(deliveryDto.getDate());
         delivery.setAddress(deliveryDto.getAddress());
         delivery.setConfirmed(deliveryDto.isConfirmed());
-        delivery.setCustomerId(deliveryDto.getCustomerId());
         deliveriesRepository.save(delivery);
     }
 

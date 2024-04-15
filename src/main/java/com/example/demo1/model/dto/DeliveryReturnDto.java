@@ -4,6 +4,7 @@ import com.example.demo1.model.Delivery;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class DeliveryReturnDto {
@@ -11,6 +12,8 @@ public class DeliveryReturnDto {
     private String address;
     private LocalDateTime date;
     private boolean confirmed;
+    private UserReturnDto user;
+    private List<ProductReturnDto> products;
 
     public Delivery toObject(DeliveryReturnDto deliveryDto) {
         Delivery delivery = new Delivery();
@@ -27,6 +30,12 @@ public class DeliveryReturnDto {
         deliveryDto.setConfirmed(delivery.isConfirmed());
         deliveryDto.setDate(delivery.getDate());
         deliveryDto.setId(delivery.getId());
+        deliveryDto.setUser(
+                new UserReturnDto(delivery.getUser().getFirstName(), delivery.getUser().getLastName()));
+        List<ProductReturnDto> productReturnDtoList = delivery.getProducts().stream()
+                .map(product -> new ProductReturnDto(product.getName(), product.getPrice(), product.getStock(), product.getDescription()))
+                .toList();
+        deliveryDto.setProducts(productReturnDtoList);
         return deliveryDto;
     }
 

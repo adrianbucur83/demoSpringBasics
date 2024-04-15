@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 @Entity
 @Table(name = "deliveries")
@@ -15,6 +16,15 @@ public class Delivery {
     private String address;
     private LocalDateTime date;
     private boolean confirmed;
-    private String customerId;
+
+    @OneToOne
+    private User user;
+
+    @ManyToMany(cascade = CascadeType.DETACH)
+    @JoinTable(name = "deliveries_products",
+              joinColumns = @JoinColumn(name = "delivery_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id",
+            referencedColumnName = "id"))
+    private List<Product> products;
 
 }
