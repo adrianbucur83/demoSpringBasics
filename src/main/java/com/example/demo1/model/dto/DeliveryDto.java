@@ -19,7 +19,6 @@ public class DeliveryDto {
         delivery.setAddress(deliveryDto.getAddress());
         delivery.setDate(deliveryDto.getDate());
         delivery.setConfirmed(deliveryDto.isConfirmed());
-        delivery.setCustomerId(deliveryDto.getCustomerId());
         return delivery;
     }
 
