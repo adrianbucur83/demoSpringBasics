@@ -1,22 +1,21 @@
 package com.example.demo1.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "reviews")
 @Data
 @SuperBuilder
 public class Review {
-    private int id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Integer id;
     private String reviewMsg;
-    private LocalDate date;
-
+    private LocalDateTime date;
     private String userName;
 
     public Review() {
