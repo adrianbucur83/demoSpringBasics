@@ -1,6 +1,7 @@
 package com.example.demo1.controller;
 
 import com.example.demo1.model.Product;
+import com.example.demo1.repository.ProductsRepository;
 import com.example.demo1.service.impl.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,48 +17,42 @@ public class ProductsController {
 
     @Autowired
     private final ProductService productService;
+    @Autowired
+    private final ProductsRepository productsRepository;
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/productList")
     public String listAllProducts(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-        return "productsPage";
+        model.addAttribute("products", productsRepository.findAll());
+        return "products/productListPage";
     }
 
     @GetMapping(value = "/product/productPage")
     public String productPage(@RequestParam(name = "id") int productId, Model model) {
         if(productService.productExists(productId)) {
-            model.addAttribute("product", productService.getProductById(productId));
+            model.addAttribute("product", productsRepository.findById(productId));
         }
-        return "productPage";
+        return "products/productPage";
     }
 
-    @GetMapping(value = "/product/{id}")
+    @GetMapping(value = "/product/updateProduct/{id}")
     public String edit_product_form(@PathVariable(name = "id") int productId, Model model) {
-        model.addAttribute("product", productService.getProductById(productId));
-        return "updateProductPage";
+        if(productService.productExists(productId)) {
+            model.addAttribute("product", productsRepository.findById(productId));
+            return "updateProductPage";
+        } else {
+            return "redirect:/productList";
+        }
     }
 
     @PostMapping(value = "/product/update")
     public String updateProduct(@RequestParam(name = "id") int productId, @ModelAttribute("product") Product newProduct,  RedirectAttributes redirectAttributes) {
-
         if(productService.productExists(productId)) {
-            Product oldProduct = productService.getProductById(productId);
-
-//            oldProduct.setId(newProduct.getId());
-//            oldProduct.setName(newProduct.getName());
-//            oldProduct.setPrice(newProduct.getPrice());
-//            oldProduct.setStock(newProduct.getStock());
-//            oldProduct.setDescription(newProduct.getDescription());
-
-            productService.updateProduct(oldProduct, newProduct);
+            productsRepository.save(newProduct);
             redirectAttributes.addFlashAttribute("updateMessage", "Successful update!");
-
         } else {
             redirectAttributes.addFlashAttribute("updateMessage", "Product does not exist!");
         }
-
-
-        return "redirect:/products";
+        return "redirect:/productList";
     }
 
     @PostMapping(value = "/product/create_product")
@@ -73,29 +68,23 @@ public class ProductsController {
                     .description(request.getParameter("description"))
                     .build();
 
-            product.setId(Integer.parseInt(request.getParameter("id")));
-            product.setName((request.getParameter("name")));
-            product.setPrice(Integer.parseInt(request.getParameter("price")));
-            product.setStock(Integer.parseInt(request.getParameter("stock")));
-            product.setDescription((request.getParameter("description")));
-
             redirectAttributes.addFlashAttribute("createMessage", "Product created!");
             productService.createProduct(product);
         } else {
             redirectAttributes.addFlashAttribute("createMessage", "A product with this id already exists!");
         }
-        return "redirect:/products";
+        return "redirect:/productList";
     }
 
     @GetMapping(value = "/product/delete_product")
     public String deleteProduct(@RequestParam(name = "id") int productId, RedirectAttributes redirectAttributes) {
         if(productService.productExists(productId)) {
-            redirectAttributes.addFlashAttribute("deleteMessage", "Deleted product: " + productService.getProductById(productId).getName() + " | ID: " + productId);
-            productService.deleteById(productId);
+            redirectAttributes.addFlashAttribute("deleteMessage", "Deleted product: " + productsRepository.findById(productId).getName() + " | ID: " + productId);
+            productsRepository.deleteById(productId);
         } else {
             redirectAttributes.addFlashAttribute("deleteMessage", "Product does not exist!");
         }
-        return "redirect:/products";
+        return "redirect:/productList";
     }
 
 }

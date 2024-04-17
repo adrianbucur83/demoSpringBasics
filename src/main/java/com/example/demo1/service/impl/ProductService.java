@@ -1,28 +1,20 @@
 package com.example.demo1.service.impl;
 
 import com.example.demo1.model.Product;
+import com.example.demo1.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProductService {
 
-    public static Map<Integer, Product> productHashMap = new HashMap<>();
+    public ProductsRepository productsRepository;
 
-    public Product getProductById(int id) {
-        return productHashMap.get(id);
-    }
-
-    public List<Product> getAllProducts() {
-        return new ArrayList<>(productHashMap.values());
+    public ProductService(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
 
     public void createProduct(Product product) {
-        productHashMap.put(product.getId(), product);
+        productsRepository.save(product);
     }
 
     public void updateProduct(Product oldProduct, Product newProduct) {
@@ -32,19 +24,11 @@ public class ProductService {
         newProduct.setStock(oldProduct.getStock());
         newProduct.setDescription(oldProduct.getDescription());
 
-        productHashMap.remove(oldProduct.getId());
-        productHashMap.put(newProduct.getId(), newProduct);
+        productsRepository.save(newProduct);
     }
 
-    public void deleteById(int id) {
-        productHashMap.remove(id);
-    }
-
-    public boolean productExists(int id) {
-        if(productHashMap.get(id) != null)
-            return true;
-
-        return false;
+    public boolean productExists(int productId) {
+        return productsRepository.findById(productId) != null;
     }
 
 }
