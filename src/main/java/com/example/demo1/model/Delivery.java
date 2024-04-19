@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 @Entity
 @Table(name = "deliveries")
 @Data
@@ -17,7 +16,7 @@ public class Delivery {
     private LocalDateTime date;
     private boolean confirmed;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @ManyToMany(cascade = CascadeType.DETACH)
