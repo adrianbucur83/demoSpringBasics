@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deliveries</title>
+</head>
+<body>
+
+<h2> Update the delivery </h2> <br>
+<p> Old delivery data </p>
+<p th:text="|Address: ${oldDelivery.address}, date: ${oldDelivery.date}, was confirmed: ${oldDelivery.confirmed} |"> Old delivery </p>
+
+<form th:action="@{/deliveries/update(id=${oldDelivery.id})}" th:object="${deliveryUpdateDto}" method="post">
+    <label for="address"> Insert a new delivery address </label>
+    <input id="address" type="text" th:field="*{address}"/>
+    <label for="date">New delivery date</label>
+    <input
+            type="datetime-local"
+            id="date"
+            value="2018-06-12T19:30"
+            min="2018-06-07T00:00"
+            max="2025-06-14T00:00"
+            th:field="*{date}" />
+    <label for="confirmed">Delivery is confirmed</label>
+    <input type="checkbox" th:field="*{confirmed}" >
+
+    <button type="submit"> Update delivery!</button>
+</form>
+
+</body>
+</html>
