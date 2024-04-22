@@ -11,7 +11,7 @@ public class OrderDto {
     private Long orderId;
     private String customerName;
     private Long totalAmount;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String address;
     private boolean orderStatus;
     private String notes;

@@ -56,16 +56,15 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderById(Long id) {
 
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order with id: " + id + "doesn't exists."));
+                .orElseThrow(() -> new RuntimeException("Order with id: " + id + " doesn't exists."));
         return order;
     }
     @Override
     public void updateOrder(OrderDto orderDto) {
-
         Order order = getOrderById(orderDto.getOrderId());
         order.setCustomerName(orderDto.getCustomerName());
         order.setTotalAmount(orderDto.getTotalAmount());
-        order.setDateTime(orderDto.getDateTime());
+//        order.setCreationDate(orderDto.getDateTime());
         order.setOrderStatus(orderDto.isOrderStatus());
         order.setAddress(orderDto.getAddress());
         order.setNotes(orderDto.getNotes());
@@ -74,8 +73,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Long id) {
-
         orderRepository.deleteById(id);
     }
-
 }

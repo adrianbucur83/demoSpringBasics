@@ -24,4 +24,7 @@ public class User {
 
   @OneToMany
   List<Delivery> deliveries;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  List<Order> orders;
 }

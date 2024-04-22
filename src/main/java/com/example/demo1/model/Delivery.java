@@ -23,8 +23,7 @@ public class Delivery {
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "deliveries_products",
               joinColumns = @JoinColumn(name = "delivery_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id",
-            referencedColumnName = "id"))
+              inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private List<Product> products;
 
 }

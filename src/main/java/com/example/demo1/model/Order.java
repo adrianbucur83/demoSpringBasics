@@ -2,8 +2,6 @@ package com.example.demo1.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
-
 @Data
 @Getter
 @Setter
@@ -17,11 +15,15 @@ public class Order {
     private Long orderId;
     private String customerName;
     private Long totalAmount;
-    private LocalDateTime dateTime;
+    private String creationDate;
     private String address;
     private boolean orderStatus;
     private String notes;
-    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 
 }
