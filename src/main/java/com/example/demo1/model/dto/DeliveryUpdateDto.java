@@ -1,14 +1,18 @@
 package com.example.demo1.model.dto;
 
 import com.example.demo1.model.Delivery;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
 @Data
 public class DeliveryUpdateDto {
     private Integer id;
+    @Length(min = 15)
     private String address;
+    @NotNull
     private LocalDateTime date;
     private boolean confirmed;
     private String customerId;

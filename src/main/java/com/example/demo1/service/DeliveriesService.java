@@ -1,5 +1,6 @@
 package com.example.demo1.service;
 
+import com.example.demo1.exception.BusinessException;
 import com.example.demo1.model.Delivery;
 import com.example.demo1.model.dto.DeliveryDto;
 import com.example.demo1.model.dto.DeliveryReturnDto;
@@ -52,7 +53,7 @@ public class DeliveriesService {
 
     public Delivery findById(Integer id) {
         return deliveriesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Delivery not found for id: " + id));
+                .orElseThrow(() -> new BusinessException("Delivery not found for id: " + id));
     }
 
     public void update(DeliveryUpdateDto deliveryDto) {
@@ -68,10 +69,15 @@ public class DeliveriesService {
         deliveriesRepository.deleteById(id);
     }
 
-    public List<DeliveryReturnDto> findAllByAddress(String address) {
-        return deliveriesRepository.findAllByAddress(address)
+    public List<DeliveryReturnDto> findAllByAddress(String address) throws Exception{
+        List<DeliveryReturnDto> deliveries = deliveriesRepository.findAllByAddress(address)
                 .stream()
                 .map(DeliveryReturnDto::toDto)
                 .toList();
+        if (deliveries.isEmpty()) {
+            throw new BusinessException("Address not found:" + address);
+        }
+        return deliveries;
+
     }
 }
