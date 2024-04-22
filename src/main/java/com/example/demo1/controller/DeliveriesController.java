@@ -4,10 +4,12 @@ import com.example.demo1.model.dto.DeliveryDto;
 import com.example.demo1.model.dto.DeliveryReturnDto;
 import com.example.demo1.model.dto.DeliveryUpdateDto;
 import com.example.demo1.service.DeliveriesService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/deliveries")
 @RequiredArgsConstructor
+@Validated
 public class DeliveriesController {
 
     private final DeliveriesService deliveriesService;
@@ -28,7 +31,7 @@ public class DeliveriesController {
     }
 
     @PostMapping
-    public String createDelivery(@ModelAttribute("deliveryDto") DeliveryDto deliveryDto,
+    public String createDelivery(@ModelAttribute("deliveryDto") @Valid DeliveryDto deliveryDto,
                                  BindingResult bindingResult,
                                  Model model) {
         model.addAttribute("deliveryDto", new DeliveryDto());
@@ -44,7 +47,10 @@ public class DeliveriesController {
     }
 
     @PostMapping("/update")
-    public String updateDelivery(@ModelAttribute DeliveryUpdateDto deliveryUpdateDto, BindingResult bindingResult, Model model){
+    public String updateDelivery(@ModelAttribute @Valid DeliveryUpdateDto deliveryUpdateDto, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
+            return "deliveries/updateForm";
+        }
         deliveriesService.update(deliveryUpdateDto);
         return "redirect:/deliveries";
     }
