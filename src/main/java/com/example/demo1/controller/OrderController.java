@@ -2,6 +2,7 @@ package com.example.demo1.controller;
 
 import com.example.demo1.model.Order;
 import com.example.demo1.model.orderDto.OrderDto;
+import com.example.demo1.repository.OrderRepository;
 import com.example.demo1.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ public class OrderController {
 
     private OrderService orderService;
 
+    private OrderRepository orderRepository;
+
     @GetMapping
     public String getOrders(Model model){
         List<OrderDto> orders = orderService.getAllOrders();
@@ -24,35 +27,29 @@ public class OrderController {
         return "orders/order";
     }
 
-    @GetMapping("/statustrue")
-    public String getOrdersByStatus(Model model){
-        List<OrderDto> orders = orderService.getAllOrdersByStatus();
-        model.addAttribute("orders", orders);
-        return "orders/order";
-    }
 
-    @GetMapping("/status")
-    public String getOrdersBySettingStatus( Model model){
-        List<OrderDto> orders = orderService.getAllOrdersBySetStatus();
+    @GetMapping("/status/{orderStatus}")
+    public String getOrdersBySettingStatus(@PathVariable String orderStatus, Model model){
+        List<OrderDto> orders = orderService.getAllOrdersByStatus(orderStatus);
         model.addAttribute("orders", orders);
         return "orders/order";
     }
 
     @GetMapping("/new")
-    public String createOrder(Model model){
+    public String createOrderForm(Model model){
         OrderDto orderDto = new OrderDto();
         model.addAttribute("order", orderDto);
         return "orders/create-order";
     }
 
     @PostMapping
-    public String showOrders(@ModelAttribute("order") OrderDto orderDto){
+    public String createOrder(@ModelAttribute("order") OrderDto orderDto){
         orderService.createOrder(orderDto);
         return "redirect:/orders";
     }
 
     @GetMapping("/{orderId}/edit")
-    public String editOrder(@PathVariable("orderId") Long orderId , Model model) {
+    public String editOrderForm(@PathVariable("orderId") Long orderId , Model model) {
 
         Order order = orderService.getOrderById(orderId);
 
@@ -62,7 +59,7 @@ public class OrderController {
     }
 
     @PostMapping("/{orderId}")
-    public String updateOrders(@PathVariable Long orderId,
+    public String updateOrder(@PathVariable Long orderId,
                                @ModelAttribute("order") OrderDto order){
         orderService.updateOrder(order);
         return "redirect:/orders";

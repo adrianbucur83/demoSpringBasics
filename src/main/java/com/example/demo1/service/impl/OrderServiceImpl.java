@@ -1,6 +1,6 @@
 package com.example.demo1.service.impl;
 
-import com.example.demo1.mapper.OrderMapper;
+import com.example.demo1.model.orderDto.mapper.OrderMapper;
 import com.example.demo1.model.Order;
 import com.example.demo1.model.orderDto.OrderDto;
 import com.example.demo1.repository.OrderRepository;
@@ -32,25 +32,19 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
         return orders;
     }
+
+
+
     @Override
-    public List<OrderDto> getAllOrdersByStatus() {
+    public List<OrderDto> getAllOrdersByStatus(String orderStatus) {
         List<OrderDto> orders = orderRepository
-                .findAllByOrderStatusTrue()
+                .findAllByOrderStatus(orderStatus)
                 .stream()
                 .map(OrderMapper::mapToDto)
                 .toList();
         return orders;
     }
 
-    @Override
-    public List<OrderDto> getAllOrdersBySetStatus() {
-        List<OrderDto> orders = orderRepository
-                .findAllOrdersByStatus()
-                .stream()
-                .map(OrderMapper::mapToDto)
-                .toList();
-        return orders;
-    }
 
     @Override
     public Order getOrderById(Long id) {
@@ -65,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCustomerName(orderDto.getCustomerName());
         order.setTotalAmount(orderDto.getTotalAmount());
 //        order.setCreationDate(orderDto.getDateTime());
-        order.setOrderStatus(orderDto.isOrderStatus());
+        order.setOrderStatus(orderDto.getOrderStatus());
         order.setAddress(orderDto.getAddress());
         order.setNotes(orderDto.getNotes());
         orderRepository.save(order);

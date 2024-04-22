@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findAllByOrderStatusTrue();
+    List<Order> findAllByOrderStatus(String orderStatus);
 
-    @Query(value ="SELECT * FROM orders o WHERE o.order_status = true", nativeQuery = true)
-    List<Order> findAllOrdersByStatus();
+    @Query(value ="SELECT * FROM orders o WHERE o.order_status = :order_status", nativeQuery = true)
+    List<Order> findAllOrdersByStatus(String orderStatus);
 }

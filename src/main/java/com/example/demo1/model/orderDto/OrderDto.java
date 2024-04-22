@@ -13,8 +13,7 @@ public class OrderDto {
     private Long totalAmount;
     private String dateTime;
     private String address;
-    private boolean orderStatus;
+    private String orderStatus;
     private String notes;
-    private Long userId;
 
 }

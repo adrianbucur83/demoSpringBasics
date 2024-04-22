@@ -1,4 +1,4 @@
-package com.example.demo1.mapper;
+package com.example.demo1.model.orderDto.mapper;
 
 import com.example.demo1.model.Order;
 import com.example.demo1.model.orderDto.OrderDto;
@@ -17,7 +17,7 @@ public class OrderMapper {
         DateTimeFormatter newDateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
         order.setCreationDate(newDateTimeFormatter.format(LocalDateTime.now()));
         order.setAddress(orderDto.getAddress());
-        order.setOrderStatus(orderDto.isOrderStatus());
+        order.setOrderStatus(orderDto.getOrderStatus());
         order.setNotes(orderDto.getNotes());
 
 
@@ -31,7 +31,7 @@ public class OrderMapper {
         orderDto.setTotalAmount(order.getTotalAmount());
         orderDto.setDateTime(order.getCreationDate());
         orderDto.setAddress(order.getAddress());
-        orderDto.setOrderStatus(order.isOrderStatus());
+        orderDto.setOrderStatus(order.getOrderStatus());
         orderDto.setNotes(order.getNotes());
 
         return orderDto;
