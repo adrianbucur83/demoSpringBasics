@@ -38,7 +38,7 @@ public class ProductsController {
     public String edit_product_form(@PathVariable(name = "id") int productId, Model model) {
         if(productService.productExists(productId)) {
             model.addAttribute("product", productsRepository.findById(productId));
-            return "updateProductPage";
+            return "products/updateProductPage";
         } else {
             return "redirect:/productList";
         }

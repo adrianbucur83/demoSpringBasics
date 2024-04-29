@@ -14,7 +14,11 @@ public class ProductService {
     }
 
     public void createProduct(Product product) {
-        productsRepository.save(product);
+        if(!productExists(product.getId())) {
+            productsRepository.save(product);
+        } else {
+            throw new RuntimeException("Product already exists!");
+        }
     }
 
     public void updateProduct(Product oldProduct, Product newProduct) {
