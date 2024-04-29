@@ -17,7 +17,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/deliveries")
 @RequiredArgsConstructor
-@Validated
 public class DeliveriesController {
 
     private final DeliveriesService deliveriesService;
@@ -49,6 +48,7 @@ public class DeliveriesController {
     @PostMapping("/update")
     public String updateDelivery(@ModelAttribute @Valid DeliveryUpdateDto deliveryUpdateDto, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
+            model.addAttribute("oldDelivery", deliveriesService.findById(deliveryUpdateDto.getId()));
             return "deliveries/updateForm";
         }
         deliveriesService.update(deliveryUpdateDto);
