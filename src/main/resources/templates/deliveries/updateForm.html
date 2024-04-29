@@ -8,14 +8,14 @@
 
 <h2> Update the delivery </h2> <br>
 <p> Old delivery data </p>
-<p th:text="|Address: ${oldDelivery.address}, date: ${oldDelivery.date}, was confirmed: ${oldDelivery.confirmed} |"> Old delivery </p>
+<p th:text="|Address: ${oldDelivery?.address}, date: ${oldDelivery?.date}, was confirmed: ${oldDelivery?.confirmed} |"> Old delivery </p>
 
 <form th:action="@{/deliveries/update(id=${oldDelivery.id})}" th:object="${deliveryUpdateDto}" method="post">
+    <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color:red;font-size:12px;">Name Error <br></div>
     <label for="address"> Insert a new delivery address </label>
-    <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</div>
     <input id="address" type="text" th:field="*{address}"/>
+    <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" style="color:red; font-size:12px;">Name Error <br></div>
     <label for="date">New delivery date</label>
-    <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Name Error</div>
     <input
             type="datetime-local"
             id="date"
