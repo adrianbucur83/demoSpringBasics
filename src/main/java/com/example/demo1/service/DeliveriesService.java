@@ -1,10 +1,12 @@
 package com.example.demo1.service;
 
+import com.example.demo1.exception.BusinessException;
 import com.example.demo1.model.Delivery;
 import com.example.demo1.model.dto.DeliveryDto;
 import com.example.demo1.model.dto.DeliveryReturnDto;
 import com.example.demo1.model.dto.DeliveryUpdateDto;
 import com.example.demo1.repository.DeliveriesRepository;
+import com.example.demo1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class DeliveriesService {
 
     private final DeliveriesRepository deliveriesRepository;
+    private final UserRepository userRepository;
 
     public void create(DeliveryDto deliveryDto) {
         if (!deliveryDto.isConfirmed()) {
@@ -25,8 +28,9 @@ public class DeliveriesService {
         if (deliveryDto.getDate().isBefore(LocalDateTime.now())) {
             throw new RuntimeException("Wrong delivery date");
         }
-
-        deliveriesRepository.save(deliveryDto.toObject(deliveryDto));
+        Delivery delivery = deliveryDto.toObject(deliveryDto);
+        delivery.setUser(userRepository.findById(1).get());
+        deliveriesRepository.save(delivery);
     }
 
     public List<DeliveryReturnDto> findAll() {
@@ -49,7 +53,7 @@ public class DeliveriesService {
 
     public Delivery findById(Integer id) {
         return deliveriesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Delivery not found for id: " + id));
+                .orElseThrow(() -> new BusinessException("Delivery not found for id: " + id));
     }
 
     public void update(DeliveryUpdateDto deliveryDto) {
@@ -65,10 +69,15 @@ public class DeliveriesService {
         deliveriesRepository.deleteById(id);
     }
 
-    public List<DeliveryReturnDto> findAllByAddress(String address) {
-        return deliveriesRepository.findAllByAddress(address)
+    public List<DeliveryReturnDto> findAllByAddress(String address) throws Exception{
+        List<DeliveryReturnDto> deliveries = deliveriesRepository.findAllByAddress(address)
                 .stream()
                 .map(DeliveryReturnDto::toDto)
                 .toList();
+        if (deliveries.isEmpty()) {
+            throw new BusinessException("Address not found:" + address);
+        }
+        return deliveries;
+
     }
 }
