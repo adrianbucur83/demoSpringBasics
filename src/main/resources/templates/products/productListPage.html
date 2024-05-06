@@ -12,6 +12,10 @@
 
 <body>
 
+<div th:if="${errors != null}">
+    <h1 th:text="${errors}" class="text-center" style="color: red"></h1>
+</div>
+
 <div th:if="${updateMessage != null}">
     <h1 th:text="${updateMessage}" class="text-center" style="color: white"></h1>
 </div>
@@ -73,23 +77,23 @@
                 <div class="container text-center d-flex align-items-center justify-content-center">
                     <div class="modal-body">
 
-                        <div class="form-floating mx-auto mb-3">
-                            <input type="number" name="id" class="form-control" id="id" placeholder="" minlength="1" maxlength="10" required>
-                            <label for="id">Id</label>
-                        </div>
+<!--                        <div class="form-floating mx-auto mb-3">-->
+<!--                            <input type="number" name="id" class="form-control" id="id" placeholder="" minlength="1" maxlength="10" required>-->
+<!--                            <label for="id">Id</label>-->
+<!--                        </div>-->
 
                         <div class="form-floating mx-auto mb-3">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="" required>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="" minlength="4" maxlength="30" required >
                             <label for="name">Name</label>
                         </div>
 
                         <div class="form-floating mx-auto mb-3">
-                            <input type="number" name="price" class="form-control" id="price" placeholder=""  minlength="1" maxlength="10" required>
+                            <input type="number" name="price" class="form-control" id="price" placeholder="" minlength="1" maxlength="10" required>
                             <label for="price">Price</label>
                         </div>
 
                         <div class="form-floating mx-auto mb-3">
-                            <input type="number" name="stock" class="form-control" id="stock" placeholder=""  minlength="1" maxlength="10" required>
+                            <input type="number" name="stock" class="form-control" id="stock" placeholder="" minlength="1" maxlength="10" required>
                             <label for="stock">Stock</label>
                         </div>
 
@@ -153,7 +157,16 @@
 <!--    </div>-->
 <!--</div>-->
 
+<script>
+    const form = document.querySelector("form")
 
+    form.addEventListener('submit', e => {
+        if(!form.checkValidity()) {
+            e.preventDefault()
+        }
+        form.classList.add('was-validated')
+    })
+</script>
 
 </body>
 

@@ -25,7 +25,7 @@
 
         <div class="mb-2">
             <label for="name" class="form-label">Name</label>
-            <input type="text" th:field="*{name}" name="name" class="form-control" id="name" required>
+            <input type="text" th:field="*{name}" name="name" class="form-control" id="name" minlength="4" maxlength="30" required>
         </div>
 
         <div class="mb-2">
@@ -35,7 +35,7 @@
 
         <div class="form-outline mb-2">
             <label for="numberInput" class="form-label">Stock</label>
-            <input type="number" th:field="*{stock}" name="stock" class="form-control" id="numberInput" />
+            <input type="number" th:field="*{stock}" name="stock" class="form-control" id="numberInput" minlength="1" maxlength="10" required>
         </div>
 
         <div class="mb-2">
@@ -46,6 +46,17 @@
         <button class="btn btn-primary text-center" style="width: 300px" type="submit" id="update-button">Update</button>
     </form>
 </div>
+
+<script>
+    const form = document.querySelector("form")
+
+    form.addEventListener('submit', e => {
+        if(!form.checkValidity()) {
+            e.preventDefault()
+        }
+        form.classList.add('was-validated')
+    })
+</script>
 
 </body>
 
