@@ -8,10 +8,12 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "products")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "products")
+
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

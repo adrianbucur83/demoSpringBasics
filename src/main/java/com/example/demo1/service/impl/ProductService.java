@@ -1,50 +1,43 @@
 package com.example.demo1.service.impl;
 
 import com.example.demo1.model.Product;
+import com.example.demo1.model.dto.ProductDto;
+import com.example.demo1.repository.ProductsRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Service
+@AllArgsConstructor
 public class ProductService {
 
-    public static Map<Integer, Product> productHashMap = new HashMap<>();
+    public ProductsRepository productsRepository;
 
-    public Product getProductById(int id) {
-        return productHashMap.get(id);
+    public void createProduct(ProductDto productDto) {
+        if(productsRepository.findByName(productDto.getName()) == null) {
+            throw new RuntimeException("A product with this name already exists!");
+        }
+        Product product = productDto.toObject(productDto);
+        productsRepository.save(product);
     }
 
-    public List<Product> getAllProducts() {
-        return new ArrayList<>(productHashMap.values());
+    public void updateProduct(Integer productId, ProductDto productDto) {
+        Product product = findById(productId);
+
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setStock(productDto.getStock());
+        product.setDescription(productDto.getDescription());
+
+        productsRepository.save(product);
     }
 
-    public void createProduct(Product product) {
-        productHashMap.put(product.getId(), product);
+    public void deleteProduct(Integer productId) {
+        findById(productId);
+        productsRepository.deleteById(productId);
     }
 
-    public void updateProduct(Product oldProduct, Product newProduct) {
-        newProduct.setId(oldProduct.getId());
-        newProduct.setName(oldProduct.getName());
-        newProduct.setPrice(oldProduct.getPrice());
-        newProduct.setStock(oldProduct.getStock());
-        newProduct.setDescription(oldProduct.getDescription());
-
-        productHashMap.remove(oldProduct.getId());
-        productHashMap.put(newProduct.getId(), newProduct);
-    }
-
-    public void deleteById(int id) {
-        productHashMap.remove(id);
-    }
-
-    public boolean productExists(int id) {
-        if(productHashMap.get(id) != null)
-            return true;
-
-        return false;
+    public Product findById(Integer id) {
+        return productsRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 
 }
