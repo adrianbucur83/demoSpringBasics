@@ -43,7 +43,7 @@ public class DeliveriesApiController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateDelivery(@RequestBody DeliveryUpdateDto deliveryDto){
+    public void updateDelivery(@RequestBody @Valid DeliveryUpdateDto deliveryDto){
         deliveriesService.update(deliveryDto);
     };
 

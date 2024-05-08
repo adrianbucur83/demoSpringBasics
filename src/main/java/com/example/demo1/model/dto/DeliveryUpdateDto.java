@@ -2,20 +2,24 @@ package com.example.demo1.model.dto;
 
 import com.example.demo1.model.Delivery;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class DeliveryUpdateDto {
     private Integer id;
     @Length(min = 15)
+    @NotNull
     private String address;
     @NotNull
     private LocalDateTime date;
     private boolean confirmed;
     private String customerId;
+    private List<Integer> productIds;
 
     public Delivery toObject(DeliveryUpdateDto deliveryDto) {
         Delivery delivery = new Delivery();

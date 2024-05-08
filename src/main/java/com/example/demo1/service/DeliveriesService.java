@@ -2,10 +2,12 @@ package com.example.demo1.service;
 
 import com.example.demo1.exception.BusinessException;
 import com.example.demo1.model.Delivery;
+import com.example.demo1.model.Product;
 import com.example.demo1.model.dto.DeliveryDto;
 import com.example.demo1.model.dto.DeliveryReturnDto;
 import com.example.demo1.model.dto.DeliveryUpdateDto;
 import com.example.demo1.repository.DeliveriesRepository;
+import com.example.demo1.repository.ProductsRepository;
 import com.example.demo1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class DeliveriesService {
 
     private final DeliveriesRepository deliveriesRepository;
     private final UserRepository userRepository;
+    private final ProductsRepository productsRepository;
 
     public void create(DeliveryDto deliveryDto) {
         if (!deliveryDto.isConfirmed()) {
@@ -57,11 +60,19 @@ public class DeliveriesService {
     }
 
     public void update(DeliveryUpdateDto deliveryDto) {
-        Delivery delivery = findById(deliveryDto.getId());
+        List<Product> productsFromTheDatabase = new ArrayList<>();
+                Delivery delivery = findById(deliveryDto.getId());
         delivery.setDate(deliveryDto.getDate());
         delivery.setAddress(deliveryDto.getAddress());
         delivery.setConfirmed(deliveryDto.isConfirmed());
+        if (deliveryDto.getProductIds() != null) {
+           productsFromTheDatabase = productsRepository.findAllById(deliveryDto.getProductIds());
+        }
+        if (!productsFromTheDatabase.isEmpty()) {
+            delivery.setProducts(productsFromTheDatabase);
+        }
         deliveriesRepository.save(delivery);
+
     }
 
     public void deleteDelivery(Integer id) {
@@ -69,7 +80,7 @@ public class DeliveriesService {
         deliveriesRepository.deleteById(id);
     }
 
-    public List<DeliveryReturnDto> findAllByAddress(String address) throws Exception{
+    public List<DeliveryReturnDto> findAllByAddress(String address) throws Exception {
         List<DeliveryReturnDto> deliveries = deliveriesRepository.findAllByAddress(address)
                 .stream()
                 .map(DeliveryReturnDto::toDto)
