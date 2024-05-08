@@ -15,5 +15,6 @@ public interface DeliveriesRepository extends JpaRepository<Delivery, Integer> {
 
     @Query(value = "FROM Delivery d WHERE d.address= :address", nativeQuery = false)
     List<Delivery> findAllByAddressHybrid(String address);
+
     void deleteAllByAddress(String address);
 }
