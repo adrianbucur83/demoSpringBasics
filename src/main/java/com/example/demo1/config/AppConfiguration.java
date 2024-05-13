@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 
 
+    @Bean(name ="welcomeMessagePayment")
+    public WelcomeMessage getWelcomeMessagePayment(){
+        return new WelcomeMessage("PAYMENTS");
+    }
+
     @Bean(name = "defaultSettings")
     public AppSettings getAppSettings(){
         AppSettings appSettings = new AppSettings();
