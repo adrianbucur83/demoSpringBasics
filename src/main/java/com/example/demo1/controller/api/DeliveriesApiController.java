@@ -7,7 +7,10 @@ import com.example.demo1.model.dto.DeliveryUpdateDto;
 import com.example.demo1.service.DeliveriesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,9 @@ public class DeliveriesApiController {
     }
 
     @GetMapping
-    public List<DeliveryReturnDto> getDeliveries(){
-        return deliveriesService.findAll();
+    public ResponseEntity<Page<DeliveryReturnDto>> getDeliveries(Pageable pageable){
+        System.out.println(pageable);
+        return null;
     }
 
     @GetMapping("/address/{address}")
@@ -45,7 +49,7 @@ public class DeliveriesApiController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateDelivery(@RequestBody @Valid DeliveryUpdateDto deliveryDto){
         deliveriesService.update(deliveryDto);
-    };
+    }
 
     @DeleteMapping("/{id}")
     public void deleteDelivery(@PathVariable Integer id){
