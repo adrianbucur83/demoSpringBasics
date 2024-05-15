@@ -24,7 +24,7 @@ public class DeliveryReturnDto {
         deliveryDto.setDate(europeanDateFormatter.format(delivery.getDate()));
         deliveryDto.setId(delivery.getId());
         deliveryDto.setUser(
-                new UserReturnDto(delivery.getUser().getFirstName(), delivery.getUser().getLastName()));
+                new UserReturnDto(delivery.getUser().getFirstName(), delivery.getUser().getLastName(), 7));
         List<ProductReturnDto> productReturnDtoList = delivery.getProducts().stream()
                 .map(product -> new ProductReturnDto(product.getName(), product.getPrice(), product.getStock(), product.getDescription()))
                 .toList();
