@@ -6,6 +6,7 @@ import com.example.demo1.model.dto.DeliveryUpdateDto;
 import com.example.demo1.service.DeliveriesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ public class DeliveriesController {
     private final DeliveriesService deliveriesService;
 
     @GetMapping
-    public String getDeliveries(Model model){
+    public String getDeliveries(Model model, Pageable pageable){
        List<DeliveryReturnDto> deliveries = deliveriesService.findAll();
        model.addAttribute("deliveries",deliveries);
        model.addAttribute("deliveryDto", new DeliveryDto());

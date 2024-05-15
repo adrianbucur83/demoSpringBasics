@@ -10,6 +10,8 @@ import com.example.demo1.repository.DeliveriesRepository;
 import com.example.demo1.repository.ProductsRepository;
 import com.example.demo1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,6 +46,13 @@ public class DeliveriesService {
                 .toList();
     }
 
+    public Page<DeliveryReturnDto> getAllPageAble(Pageable pageable) {
+        return deliveriesRepository
+                .findAll(pageable)
+                .map(DeliveryReturnDto::toDto);
+    }
+
+
     public List<DeliveryReturnDto> findAllOldJava() {
         List<Delivery> deliveries = deliveriesRepository.findAll();
         List<DeliveryReturnDto> deliveryReturnDtos = new ArrayList<>();
@@ -61,12 +70,12 @@ public class DeliveriesService {
 
     public void update(DeliveryUpdateDto deliveryDto) {
         List<Product> productsFromTheDatabase = new ArrayList<>();
-                Delivery delivery = findById(deliveryDto.getId());
+        Delivery delivery = findById(deliveryDto.getId());
         delivery.setDate(deliveryDto.getDate());
         delivery.setAddress(deliveryDto.getAddress());
         delivery.setConfirmed(deliveryDto.isConfirmed());
         if (deliveryDto.getProductIds() != null) {
-           productsFromTheDatabase = productsRepository.findAllById(deliveryDto.getProductIds());
+            productsFromTheDatabase = productsRepository.findAllById(deliveryDto.getProductIds());
         }
         if (!productsFromTheDatabase.isEmpty()) {
             delivery.setProducts(productsFromTheDatabase);
